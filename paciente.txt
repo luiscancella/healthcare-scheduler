@@ -1,0 +1,27 @@
+guilhermino
+P0001
+pernambuco
+1408
+30130153
+B H
+1408
+ap801
+
+filipe
+P0002
+sergipe
+savassi
+30130154
+Monlevade
+85
+Sem Complemento
+
+Yasmin Frossard
+P003
+Engenheiro Zoroastro
+Santo Antonio
+30130154
+Belo Horizonte
+504
+ap 302
+
