@@ -81,7 +81,7 @@ void criaPaciente()
     fclose(arqPaciente);
 }
 
-void lerPacientes(Paciente *arrPacientes)
+int lerPacientes(Paciente *arrPacientes)
 {
 
     int i = 0;

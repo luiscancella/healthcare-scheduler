@@ -11,27 +11,26 @@ int main()
 
     int resposta = 0;
 
-    // quantidadePacientes = lerPacientes(pacientes);
+    quantidadePacientes = lerPacientes(pacientes);
     quantidadeMedico = lerMedicos(medicos);
-    // while (1)
-    // {
-    //     resposta = menu();
-    //     if (resposta == 1)
-    //     {
-    //         criaPaciente();
-    //     }
-    //     else if (resposta == 2)
-    //     {
-    //         criaMedico();
-    //     }
-    //     else if (resposta == 3)
-    //     {
-    //         criaConsulta();
-    //     }
-    // }
-    char *string = "M0001";
-    Medico novoMed = procuraMedico(string, medicos, quantidadeMedico); // apagar
-    if (novoMed.codigo)
-        printf("%s", novoMed.nome);
+    quantidadeConsultas = lerConsultas(consultas, medicos, pacientes);
+
+    while (1)
+    {
+        resposta = menu();
+        if (resposta == 1)
+        {
+            criaPaciente();
+        }
+        else if (resposta == 2)
+        {
+            criaMedico();
+        }
+        else if (resposta == 3)
+        {
+            criaConsulta(quantidadeMedico, quantidadePacientes, medicos, pacientes);
+        }
+    }
+
     return 1;
 }
