@@ -23,7 +23,7 @@ typedef struct
 
 } Paciente;
 
-void criaPaciente()
+void criaPaciente(int *quantidadePacientes)
 {
     Paciente novoPaciente;
     int resposta = -1;
@@ -32,9 +32,6 @@ void criaPaciente()
 
     printf("Digite o nome do paciente: ");
     fgets(novoPaciente.nome, sizeof(novoPaciente.nome), stdin);
-
-    printf("\nDigite um codigo para o paciente: ");
-    fgets(novoPaciente.codigo, sizeof(novoPaciente.codigo), stdin);
 
     printf("\nDigite o nome da rua do paciente: ");
     fgets(novoPaciente.endereco.rua, sizeof(novoPaciente.endereco.rua), stdin);
@@ -69,8 +66,10 @@ void criaPaciente()
         strcpy(novoPaciente.endereco.complemento, "Sem complemento");
     }
 
+    sprintf(novoPaciente.codigo, "P%04d", (*quantidadePacientes) + 1);
+
     fprintf(arqPaciente, "%s", novoPaciente.nome);
-    fprintf(arqPaciente, "%s", novoPaciente.codigo);
+    fprintf(arqPaciente, "%s\n", novoPaciente.codigo);
     fprintf(arqPaciente, "%s", novoPaciente.endereco.rua);
     fprintf(arqPaciente, "%s", novoPaciente.endereco.bairro);
     fprintf(arqPaciente, "%s", novoPaciente.endereco.cep);

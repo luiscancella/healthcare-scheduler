@@ -11,7 +11,7 @@ typedef struct
     char especialidade[50];
 } Medico;
 
-void criaMedico()
+void criaMedico(int *quantidadeMedico)
 {
     Medico novoMedico;
     FILE *arqMedico = fopen("medico.txt", "a");
@@ -20,17 +20,15 @@ void criaMedico()
     printf("Digite o nome do Medico: ");
     fgets(novoMedico.nome, sizeof(novoMedico.nome), stdin);
 
-    printf("\nDigite um codigo para o Medico: ");
-    fgets(novoMedico.codigo, sizeof(novoMedico.codigo), stdin);
-
     printf("\nDigite o telefone do Medico: ");
     fgets(novoMedico.telefone, sizeof(novoMedico.telefone), stdin);
 
     printf("\nDigite a especialidade do Medico: ");
     fgets(novoMedico.especialidade, sizeof(novoMedico.especialidade), stdin);
 
+    sprintf(novoMedico.codigo, "M%04d", (*quantidadeMedico) + 1);
     fprintf(arqMedico, "%s", novoMedico.nome);
-    fprintf(arqMedico, "%s", novoMedico.codigo);
+    fprintf(arqMedico, "%s\n", novoMedico.codigo);
     fprintf(arqMedico, "%s", novoMedico.telefone);
     fprintf(arqMedico, "%s\n", novoMedico.especialidade);
 

@@ -20,15 +20,18 @@ int main()
         resposta = menu();
         if (resposta == 1)
         {
-            criaPaciente();
+            criaPaciente(&quantidadePacientes);
+            quantidadePacientes = lerPacientes(pacientes);
         }
         else if (resposta == 2)
         {
-            criaMedico();
+            criaMedico(&quantidadeMedico);
+            quantidadeMedico = lerMedicos(medicos);
         }
         else if (resposta == 3)
         {
-            criaConsulta(quantidadeMedico, quantidadePacientes, medicos, pacientes);
+            criaConsulta(quantidadeMedico, quantidadePacientes, medicos, pacientes, &quantidadeConsultas);
+            quantidadeConsultas = lerConsultas(consultas, medicos, pacientes);
         }
     }
 

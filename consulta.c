@@ -18,7 +18,7 @@ typedef struct
     Medico medico;
 } Consulta;
 
-void criaConsulta(int quantidadeMedico, int quantidadePaciente, Medico medicos[], Paciente pacientes[])
+void criaConsulta(int quantidadeMedico, int quantidadePaciente, Medico medicos[], Paciente pacientes[], int *qtdConsultas)
 {
 
     Consulta novaConsulta;
@@ -43,8 +43,7 @@ void criaConsulta(int quantidadeMedico, int quantidadePaciente, Medico medicos[]
         return;
     novaConsulta.paciente = paciente;
 
-    printf("Digite o codigo de consulta: ");
-    scanf("%s", novaConsulta.codigoConsulta);
+    sprintf(novaConsulta.codigoConsulta, "C%04d", (*qtdConsultas) + 1);
 
     printf("Digite o dia da consulta: ");
     scanf("%d", &novaConsulta.data.dia);
@@ -121,7 +120,6 @@ int lerConsultas(Consulta *arrConsultas, Medico medicos[], Paciente pacientes[])
         codMedico[strcspn(codMedico, "\n")] = 0;
         (arrConsultas + i)->medico = procuraMedico(codMedico, medicos, 100);
 
-        printf("dia: %s\n", (arrConsultas + i)->paciente.codigo);
         fgets(linha, sizeof(char) * 100, arqConsulta); // descartar linha entre dados
 
         i++;

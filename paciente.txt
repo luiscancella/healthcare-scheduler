@@ -25,3 +25,11 @@ Belo Horizonte
 504
 ap 302
 
+luis
+P0004
+rua 01
+santa luzia
+30140241
+BH
+12
+Sem complemento
