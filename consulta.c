@@ -18,7 +18,26 @@ typedef struct
     Medico medico;
 } Consulta;
 
-void criaConsulta(int quantidadeMedico, int quantidadePaciente, Medico medicos[], Paciente pacientes[], int *qtdConsultas)
+int contaConsultasMedicosPorDia(Consulta consultas[], int dia, int mes, int ano, int quantidadeConsultas, Medico medico)
+{
+
+    int numConsultas = 0;
+
+    for (int i = 0; i < quantidadeConsultas; i++)
+    {
+        if (consultas[i].data.dia == dia &&
+            consultas[i].data.mes == mes &&
+            consultas[i].data.ano == ano &&
+            !strcmp(consultas[i].medico.codigo, medico.codigo))
+        {
+            numConsultas++;
+        }
+    }
+    printf("Medico %s possui %d consultas no dia %d/%d/%d\n", medico.nome, numConsultas, dia, mes, ano);
+    return numConsultas;
+}
+
+void criaConsulta(int quantidadeMedico, int quantidadePaciente, Medico medicos[], Paciente pacientes[], int *qtdConsultas, Consulta consultas[])
 {
 
     Consulta novaConsulta;
@@ -60,14 +79,22 @@ void criaConsulta(int quantidadeMedico, int quantidadePaciente, Medico medicos[]
     printf("Digite o minuto da consulta: ");
     scanf("%d", &novaConsulta.data.minutos);
 
-    fprintf(arqConsultas, "%s\n", novaConsulta.codigoConsulta);
-    fprintf(arqConsultas, "%d\n", novaConsulta.data.dia);
-    fprintf(arqConsultas, "%d\n", novaConsulta.data.mes);
-    fprintf(arqConsultas, "%d\n", novaConsulta.data.ano);
-    fprintf(arqConsultas, "%d\n", novaConsulta.data.hora);
-    fprintf(arqConsultas, "%d\n", novaConsulta.data.minutos);
-    fprintf(arqConsultas, "%s\n", novaConsulta.paciente.codigo);
-    fprintf(arqConsultas, "%s\n\n", novaConsulta.medico.codigo);
+    if (contaConsultasMedicosPorDia(consultas, novaConsulta.data.dia, novaConsulta.data.mes, novaConsulta.data.ano, *qtdConsultas, medico) >= 2)
+    {
+        printf("Medico ja possui duas consultas nesse dia\n");
+        return;
+    }
+    else
+    {
+        fprintf(arqConsultas, "%s\n", novaConsulta.codigoConsulta);
+        fprintf(arqConsultas, "%d\n", novaConsulta.data.dia);
+        fprintf(arqConsultas, "%d\n", novaConsulta.data.mes);
+        fprintf(arqConsultas, "%d\n", novaConsulta.data.ano);
+        fprintf(arqConsultas, "%d\n", novaConsulta.data.hora);
+        fprintf(arqConsultas, "%d\n", novaConsulta.data.minutos);
+        fprintf(arqConsultas, "%s\n", novaConsulta.paciente.codigo);
+        fprintf(arqConsultas, "%s\n\n", novaConsulta.medico.codigo);
+    }
 
     fclose(arqConsultas);
 }

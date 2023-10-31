@@ -30,10 +30,12 @@ int main()
         }
         else if (resposta == 3)
         {
-            criaConsulta(quantidadeMedico, quantidadePacientes, medicos, pacientes, &quantidadeConsultas);
+            criaConsulta(quantidadeMedico, quantidadePacientes, medicos, pacientes, &quantidadeConsultas, consultas);
             quantidadeConsultas = lerConsultas(consultas, medicos, pacientes);
         }
     }
+
+    contaConsultasMedicosPorDia(consultas, 22, 10, 2023, quantidadeConsultas, medicos[2]);
 
     return 1;
 }
