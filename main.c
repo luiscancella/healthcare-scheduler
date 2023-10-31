@@ -9,13 +9,13 @@ int main()
     Medico medicos[10] = {0};
     int quantidadeMedico = 0, quantidadePacientes = 0, quantidadeConsultas = 0;
 
-    int resposta = 0;
+    int resposta = -1;
 
     quantidadePacientes = lerPacientes(pacientes);
     quantidadeMedico = lerMedicos(medicos);
     quantidadeConsultas = lerConsultas(consultas, medicos, pacientes);
 
-    while (1)
+    while (resposta != 0)
     {
         resposta = menu();
         if (resposta == 1)
@@ -34,8 +34,6 @@ int main()
             quantidadeConsultas = lerConsultas(consultas, medicos, pacientes);
         }
     }
-
-    contaConsultasMedicosPorDia(consultas, 22, 10, 2023, quantidadeConsultas, medicos[2]);
 
     return 1;
 }

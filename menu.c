@@ -9,8 +9,8 @@ void printBarra()
 
 int menu()
 {
-    int resposta = 0;
-    while (resposta < 1 || resposta > 8)
+    int resposta = -1;
+    while (resposta < 0 || resposta > 8)
     {
         system("clear");
         printf("BEM VINDO AO MENU!!\n");
@@ -22,6 +22,8 @@ int menu()
         printf("6 - Consultas de um paciente pro nome ou código\n");
         printf("7 - Consultas de um medico por nome ou código\n");
         printf("8 - Funcao extra do grupo\n");
+        printf("0 - SAIR\n");
+
         printBarra();
         printf("\nSELECIONE UMA OPÇAO: ");
         scanf("%d", &resposta);
