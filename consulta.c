@@ -205,6 +205,7 @@ void cancelarConsulta(char codigo[], Consulta *consultas, int tamanhoArr)
         fprintf(arqConsulta, "%s\n", (consultas + i)->medico.codigo);
         fprintf(arqConsulta, "%d\n\n", (consultas + i)->ativo);
     }
-
     fclose(arqConsulta);
+    
+    printf("Consulta cancelada com sucesso!\n");
 }

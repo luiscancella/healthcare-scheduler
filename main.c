@@ -38,7 +38,10 @@ int main()
         }
         else if (resposta == 4)
         {
-            // cancelarConsulta("C0001", consultas, quantidadeConsultas);
+            printf("Digite o codigo da consulta ----> ");
+            scanf("%s", codConsulta);
+            cancelarConsulta(codConsulta, consultas, quantidadeConsultas);
+            system("pause");
         }
     }
 

@@ -12,7 +12,7 @@ int menu()
     int resposta = -1;
     while (resposta < 0 || resposta > 8)
     {
-        system("clear");
+        system("cls");
         printf("BEM VINDO AO MENU!!\n");
         printf("1 - Cadastrar um paciente\n");
         printf("2 - Cadastrar um medico\n");
