@@ -27,7 +27,7 @@ int menu()
         printBarra();
         printf("\nSELECIONE UMA OPÇAO: ");
         scanf("%d", &resposta);
-        system("clear");
+        system("cls");
     }
 
     return resposta;

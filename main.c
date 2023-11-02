@@ -8,12 +8,15 @@ int main()
     Consulta consultas[500] = {0};
     Medico medicos[10] = {0};
     int quantidadeMedico = 0, quantidadePacientes = 0, quantidadeConsultas = 0;
+    char codConsulta[30];
 
     int resposta = -1;
 
     quantidadePacientes = lerPacientes(pacientes);
     quantidadeMedico = lerMedicos(medicos);
     quantidadeConsultas = lerConsultas(consultas, medicos, pacientes);
+
+    
 
     while (resposta != 0)
     {
@@ -32,6 +35,10 @@ int main()
         {
             criaConsulta(quantidadeMedico, quantidadePacientes, medicos, pacientes, &quantidadeConsultas, consultas);
             quantidadeConsultas = lerConsultas(consultas, medicos, pacientes);
+        }
+        else if (resposta == 4)
+        {
+            // cancelarConsulta("C0001", consultas, quantidadeConsultas);
         }
     }
 

@@ -16,6 +16,7 @@ typedef struct
     Data data;
     Paciente paciente;
     Medico medico;
+    int ativo;
 } Consulta;
 
 int contaConsultasMedicosPorDia(Consulta consultas[], int dia, int mes, int ano, int quantidadeConsultas, Medico medico)
@@ -94,6 +95,7 @@ void criaConsulta(int quantidadeMedico, int quantidadePaciente, Medico medicos[]
         fprintf(arqConsultas, "%d\n", novaConsulta.data.minutos);
         fprintf(arqConsultas, "%s\n", novaConsulta.paciente.codigo);
         fprintf(arqConsultas, "%s\n\n", novaConsulta.medico.codigo);
+        fprintf(arqConsultas, "1");
     }
 
     fclose(arqConsultas);
@@ -147,10 +149,62 @@ int lerConsultas(Consulta *arrConsultas, Medico medicos[], Paciente pacientes[])
         codMedico[strcspn(codMedico, "\n")] = 0;
         (arrConsultas + i)->medico = procuraMedico(codMedico, medicos, 100);
 
+        fgets(numero, sizeof(numero), arqConsulta);
+        numero[strcspn(numero, "\n")] = 0;
+        (arrConsultas + i)->ativo = atoi(numero);
+
         fgets(linha, sizeof(char) * 100, arqConsulta); // descartar linha entre dados
 
         i++;
     }
     fclose(arqConsulta);
     return i;
+}
+
+void cancelarConsulta(char codigo[], Consulta *consultas, int tamanhoArr)
+{
+
+    int i = 0;
+    FILE *arqConsulta = fopen("consultas.txt", "r");
+    char linha[100];
+    int existeConsulta = 0;
+
+    if (arqConsulta == NULL)
+    {
+        printf("Erro ao abrir consultas.txt\n");
+        return;
+    }
+
+    for(i = 0; i < tamanhoArr; i++)
+    {
+        if(strcmp(codigo, (consultas + i)->codigoConsulta)==0)
+        {
+            (consultas + i)->ativo = 0;
+            existeConsulta = 1;
+        }
+    }
+
+    if(existeConsulta != 1)
+    {
+        printf("Consulta não existe!\n");
+        return;
+    }
+
+    fclose(arqConsulta);
+    arqConsulta = fopen("consultas.txt", "w");
+
+    for(i = 0; i < tamanhoArr; i++)
+    {
+        fprintf(arqConsulta, "%s\n", (consultas + i)->codigoConsulta);
+        fprintf(arqConsulta, "%d\n", (consultas + i)->data.dia);
+        fprintf(arqConsulta, "%d\n", (consultas + i)->data.mes);
+        fprintf(arqConsulta, "%d\n", (consultas + i)->data.ano);
+        fprintf(arqConsulta, "%d\n", (consultas + i)->data.hora);
+        fprintf(arqConsulta, "%d\n", (consultas + i)->data.minutos);
+        fprintf(arqConsulta, "%s\n", (consultas + i)->paciente.codigo);
+        fprintf(arqConsulta, "%s\n", (consultas + i)->medico.codigo);
+        fprintf(arqConsulta, "%d\n\n", (consultas + i)->ativo);
+    }
+
+    fclose(arqConsulta);
 }
