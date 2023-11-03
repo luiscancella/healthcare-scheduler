@@ -16,7 +16,9 @@ int main()
     quantidadeMedico = lerMedicos(medicos);
     quantidadeConsultas = lerConsultas(consultas, medicos, pacientes);
 
-    
+    // consultasPorMedico("M0001", consultas, quantidadeConsultas);
+
+    system("pause");
 
     while (resposta != 0)
     {

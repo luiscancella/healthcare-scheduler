@@ -209,3 +209,26 @@ void cancelarConsulta(char codigo[], Consulta *consultas, int tamanhoArr)
     
     printf("Consulta cancelada com sucesso!\n");
 }
+
+void consultasPorMedico(char identificador[], Consulta consultas[], int quantidadeConsultas)
+{
+    int numConsultas = 1;
+
+    for(int i = 0; i < quantidadeConsultas; i++)
+    {
+        if(strcmp(identificador, consultas[i].medico.nome) == 0 || strcmp(identificador, consultas[i].medico.codigo) == 0)
+        {
+            printf("- CONSULTA %d:\n\n", numConsultas);
+            printf("=-=-=-=DADOS DA CONSULTA=-=-=-=\n");
+            printf("CODIGO DA CONSULTA: %s\n", consultas[i].codigoConsulta);
+            printf("DATA: %d/%d/%d\n", consultas[i].data.dia, consultas[i].data.mes, consultas[i].data.ano);
+            printf("\n=-=-=-=DADOS DO PACIENTE=-=-=-=\n");
+            printf("NOME: %s\n", consultas[i].paciente.nome);
+            printf("CODIGO: %s\n", consultas[i].paciente.codigo);
+            printf("\n=-=-=-=DADOS DO MEDICO=-=-=-=\n");
+            printf("NOME: %s\n", consultas[i].medico.nome);
+            printf("CODIGO: %s\n", consultas[i].medico.codigo);
+            printf("\n\n");
+        }
+    }
+}
