@@ -213,12 +213,14 @@ void cancelarConsulta(char codigo[], Consulta *consultas, int tamanhoArr)
 void consultasPorMedico(char identificador[], Consulta consultas[], int quantidadeConsultas)
 {
     int numConsultas = 1;
+    int achouConsulta = 0;
 
     for(int i = 0; i < quantidadeConsultas; i++)
     {
         if(strcmp(identificador, consultas[i].medico.nome) == 0 || strcmp(identificador, consultas[i].medico.codigo) == 0)
         {
-            printf("- CONSULTA %d:\n\n", numConsultas);
+            printf("\n=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=\n");
+            printf("\n- CONSULTA %d:\n\n", numConsultas);
             printf("=-=-=-=DADOS DA CONSULTA=-=-=-=\n");
             printf("CODIGO DA CONSULTA: %s\n", consultas[i].codigoConsulta);
             printf("DATA: %d/%d/%d\n", consultas[i].data.dia, consultas[i].data.mes, consultas[i].data.ano);
@@ -228,7 +230,15 @@ void consultasPorMedico(char identificador[], Consulta consultas[], int quantida
             printf("\n=-=-=-=DADOS DO MEDICO=-=-=-=\n");
             printf("NOME: %s\n", consultas[i].medico.nome);
             printf("CODIGO: %s\n", consultas[i].medico.codigo);
-            printf("\n\n");
+            achouConsulta = 1;
+            numConsultas++;
         }
     }
+
+    if (achouConsulta == 0)
+    {
+        printf("\nMedico nao existe ou nao possui consulta!\n");
+    }
+
+    printf("\n=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=\n");
 }
