@@ -63,7 +63,7 @@ void criaPaciente(int *quantidadePacientes)
     }
     else
     {
-        strcpy(novoPaciente.endereco.complemento, "Sem complemento");
+        strcpy(novoPaciente.endereco.complemento, "Sem complemento\n");
     }
 
     sprintf(novoPaciente.codigo, "P%04d", (*quantidadePacientes) + 1);
