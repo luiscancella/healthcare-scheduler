@@ -51,7 +51,7 @@ void criaPaciente(int *quantidadePacientes)
 
     while (resposta != 1 && resposta != 0)
     {
-        printf("\n\nPara adicionar complemento digite 1, para deixar em branco digite 0: ");
+        printf("\nPara adicionar complemento digite 1, para deixar em branco digite 0: ");
         scanf("%d", &resposta);
         getchar(); // Para consumir o '\n' deixado pelo scanf
     }

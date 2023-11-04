@@ -175,16 +175,16 @@ void cancelarConsulta(char codigo[], Consulta *consultas, int tamanhoArr)
         return;
     }
 
-    for(i = 0; i < tamanhoArr; i++)
+    for (i = 0; i < tamanhoArr; i++)
     {
-        if(strcmp(codigo, (consultas + i)->codigoConsulta)==0)
+        if (strcmp(codigo, (consultas + i)->codigoConsulta) == 0)
         {
             (consultas + i)->ativo = 0;
             existeConsulta = 1;
         }
     }
 
-    if(existeConsulta != 1)
+    if (existeConsulta != 1)
     {
         printf("Consulta não existe!\n");
         return;
@@ -193,7 +193,7 @@ void cancelarConsulta(char codigo[], Consulta *consultas, int tamanhoArr)
     fclose(arqConsulta);
     arqConsulta = fopen("consultas.txt", "w");
 
-    for(i = 0; i < tamanhoArr; i++)
+    for (i = 0; i < tamanhoArr; i++)
     {
         fprintf(arqConsulta, "%s\n", (consultas + i)->codigoConsulta);
         fprintf(arqConsulta, "%d\n", (consultas + i)->data.dia);
@@ -206,6 +206,39 @@ void cancelarConsulta(char codigo[], Consulta *consultas, int tamanhoArr)
         fprintf(arqConsulta, "%d\n\n", (consultas + i)->ativo);
     }
     fclose(arqConsulta);
-    
+
     printf("Consulta cancelada com sucesso!\n");
+}
+
+void consultasPorData(Consulta consultas[], int quantidadeConsultas)
+{
+    int dia = 0, mes = 0, ano = 0;
+    int numConsultas = 0;
+
+    printf("Digite o dia: ");
+    scanf("%d", &dia);
+    printf("Digite o mes: ");
+    scanf("%d", &mes);
+    printf("Digite o ano: ");
+    scanf("%d", &ano);
+
+    for (int i = 0; i < quantidadeConsultas; i++)
+    {
+        if (consultas[i].data.dia == dia &&
+            consultas[i].data.mes == mes &&
+            consultas[i].data.ano == ano)
+        {
+            numConsultas++;
+            printf("Codigo da consulta: %s\n", consultas[i].codigoConsulta);
+            printf("Nome do médico: %s\n", consultas[i].medico.nome);
+            printf("Nome do paciente: %s\n", consultas[i].paciente.nome);
+            printf("Horario: %d:%d\n\n", consultas[i].data.hora, consultas[i].data.minutos);
+        }
+    }
+
+    if (numConsultas == 0)
+    {
+        printf("Nao ha consultas nesse dia\n");
+    }
+    return;
 }

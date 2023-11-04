@@ -16,8 +16,6 @@ int main()
     quantidadeMedico = lerMedicos(medicos);
     quantidadeConsultas = lerConsultas(consultas, medicos, pacientes);
 
-    
-
     while (resposta != 0)
     {
         resposta = menu();
@@ -41,7 +39,10 @@ int main()
             printf("Digite o codigo da consulta ----> ");
             scanf("%s", codConsulta);
             cancelarConsulta(codConsulta, consultas, quantidadeConsultas);
-            system("pause");
+        }
+        else if (resposta == 5)
+        {
+            consultasPorData(consultas, quantidadeConsultas);
         }
     }
 
