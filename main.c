@@ -44,6 +44,10 @@ int main()
         {
             consultasPorData(consultas, quantidadeConsultas);
         }
+        else if (resposta == 6)
+        {
+            consultasPorPaciente(consultas, quantidadeConsultas);
+        }
     }
 
     return 1;

@@ -52,7 +52,10 @@ void criaConsulta(int quantidadeMedico, int quantidadePaciente, Medico medicos[]
     medico = procuraMedico(codMedico, medicos, quantidadeMedico);
 
     if (strcmp(medico.codigo, "") == 0)
+    {
+        printf("Medico nao encontrado!\n");
         return;
+    }
     novaConsulta.medico = medico;
 
     printf("Digite com o codigo do paciente: ");
@@ -60,7 +63,10 @@ void criaConsulta(int quantidadeMedico, int quantidadePaciente, Medico medicos[]
     paciente = procuraPaciente(codPaciente, pacientes, quantidadePaciente);
 
     if (strcmp(paciente.codigo, "") == 0)
+    {
+        printf("Paciente nao encontrado!\n");
         return;
+    }
     novaConsulta.paciente = paciente;
 
     sprintf(novaConsulta.codigoConsulta, "C%04d", (*qtdConsultas) + 1);
@@ -239,6 +245,36 @@ void consultasPorData(Consulta consultas[], int quantidadeConsultas)
     if (numConsultas == 0)
     {
         printf("Nao ha consultas nesse dia\n");
+    }
+    return;
+}
+
+void consultasPorPaciente(Consulta consultas[], int quantidadeConsultas)
+{
+    getchar(); // Para consumir o '\n' deixado pelo scanf
+    char entrada[50];
+    int numConsultas = 0;
+
+    printf("Digite nome ou codigo do paciente: %s", entrada);
+    fgets(entrada, sizeof(entrada), stdin);
+    entrada[strcspn(entrada, "\n")] = 0;
+
+    for (int i = 0; i < quantidadeConsultas; i++)
+    {
+
+        if (!(strcmp(entrada, consultas[i].paciente.codigo)) || !(strcmp(entrada, consultas[i].paciente.nome)))
+        {
+            numConsultas++;
+            printf("Codigo da consulta: %s\n", consultas[i].codigoConsulta);
+            printf("Nome do médico: %s\n", consultas[i].medico.nome);
+            printf("Nome do paciente: %s\n", consultas[i].paciente.nome);
+            printf("Horario: %d:%d\n", consultas[i].data.hora, consultas[i].data.minutos);
+        }
+    }
+
+    if (!numConsultas)
+    {
+        printf("Nenhuma consulta com esse nome ou codigo de paciente foi encontrada\n");
     }
     return;
 }
