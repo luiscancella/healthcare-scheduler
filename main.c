@@ -8,7 +8,7 @@ int main()
     Consulta consultas[500] = {0};
     Medico medicos[10] = {0};
     int quantidadeMedico = 0, quantidadePacientes = 0, quantidadeConsultas = 0;
-    char codConsulta[30];
+    char textoResposta[50];
 
     int resposta = -1;
 
@@ -47,6 +47,17 @@ int main()
         else if (resposta == 6)
         {
             consultasPorPaciente(consultas, quantidadeConsultas);
+            scanf("%s", textoResposta);
+            cancelarConsulta(textoResposta, consultas, quantidadeConsultas);
+            system("pause");
+        }
+        else if (resposta == 7)
+        {
+            printf("=-=-=-=-=-= PESQUISA DE CONSULTA POR MEDICO =-=-=-=-=-=\n\n");
+            printf("Digite o Nome ou Codigo do Medico ----> ");
+            scanf("%s", textoResposta);
+            consultasPorMedico(textoResposta, consultas, quantidadeConsultas);
+            system("pause");
         }
     }
 
