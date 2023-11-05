@@ -37,8 +37,8 @@ int main()
         else if (resposta == 4)
         {
             printf("Digite o codigo da consulta ----> ");
-            scanf("%s", codConsulta);
-            cancelarConsulta(codConsulta, consultas, quantidadeConsultas);
+            scanf("%s", textoResposta);
+            cancelarConsulta(textoResposta, consultas, quantidadeConsultas);
         }
         else if (resposta == 5)
         {
