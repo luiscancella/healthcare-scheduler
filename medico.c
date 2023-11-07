@@ -33,6 +33,7 @@ void criaMedico(int *quantidadeMedico)
     fprintf(arqMedico, "%s\n", novoMedico.especialidade);
 
     fclose(arqMedico);
+    printf("Medico criado com sucesso\n");
 }
 
 int lerMedicos(Medico *arrMedicos)

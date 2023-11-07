@@ -1,44 +1,18 @@
-guilhermino
+Guilhermino Lucas
 P0001
-pernambuco
-1408
+Pernambuco
+Savassi
 30130153
-B H
-1408
-ap801
-
-filipe
-P0002
-sergipe
-savassi
-30130154
-Monlevade
-85
-Sem Complemento
-
-Yasmin Frossard
-P0003
-Engenheiro Zoroastro
-Santo Antonio
-30130154
 Belo Horizonte
-504
-ap 302
-
-luis
-P0004
-rua 01
-santa luzia
-30140241
-BH
-12
+1408
 Sem complemento
-Guilhermino Clovis
-P0005
-Serra do cristal
-Sidil
-40130153
-Divinopolis
-950
-ap 704
+
+Clara Azevedo
+P0002
+Rua Alagoas
+Savassi
+30128465
+Belo Horizonte
+132
+ap 302
 

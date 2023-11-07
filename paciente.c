@@ -78,6 +78,7 @@ void criaPaciente(int *quantidadePacientes)
     fprintf(arqPaciente, "%s\n", novoPaciente.endereco.complemento);
 
     fclose(arqPaciente);
+    printf("\nPaciente criado com sucesso\n");
 }
 
 int lerPacientes(Paciente *arrPacientes)

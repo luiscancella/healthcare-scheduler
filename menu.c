@@ -21,7 +21,7 @@ int menu()
         printf("5 - Consultas por data\n");
         printf("6 - Consultas de um paciente por nome ou código\n");
         printf("7 - Consultas de um medico por nome ou código\n");
-        printf("8 - Funcao extra do grupo\n");
+        printf("8 - Adicionar feedback de paciente\n");
         printf("0 - SAIR\n");
 
         printBarra();

@@ -17,6 +17,7 @@ typedef struct
     Paciente paciente;
     Medico medico;
     int ativo;
+    char feedback[500];
 } Consulta;
 
 int contaConsultasMedicosPorDia(Consulta consultas[], int dia, int mes, int ano, int quantidadeConsultas, Medico medico)
@@ -29,12 +30,12 @@ int contaConsultasMedicosPorDia(Consulta consultas[], int dia, int mes, int ano,
         if (consultas[i].data.dia == dia &&
             consultas[i].data.mes == mes &&
             consultas[i].data.ano == ano &&
+            consultas[i].ativo &&
             !strcmp(consultas[i].medico.codigo, medico.codigo))
         {
             numConsultas++;
         }
     }
-    printf("Medico %s possui %d consultas no dia %d/%d/%d\n", medico.nome, numConsultas, dia, mes, ano);
     return numConsultas;
 }
 
@@ -100,11 +101,13 @@ void criaConsulta(int quantidadeMedico, int quantidadePaciente, Medico medicos[]
         fprintf(arqConsultas, "%d\n", novaConsulta.data.hora);
         fprintf(arqConsultas, "%d\n", novaConsulta.data.minutos);
         fprintf(arqConsultas, "%s\n", novaConsulta.paciente.codigo);
-        fprintf(arqConsultas, "%s\n\n", novaConsulta.medico.codigo);
-        fprintf(arqConsultas, "1");
+        fprintf(arqConsultas, "%s\n", novaConsulta.medico.codigo);
+        fprintf(arqConsultas, "1\n");
+        fprintf(arqConsultas, "Sem Feedback\n\n");
     }
 
     fclose(arqConsultas);
+    printf("Consulta criado com sucesso\n");
 }
 
 int lerConsultas(Consulta *arrConsultas, Medico medicos[], Paciente pacientes[])
@@ -123,7 +126,7 @@ int lerConsultas(Consulta *arrConsultas, Medico medicos[], Paciente pacientes[])
     {
         (arrConsultas + i)->codigoConsulta[strcspn((arrConsultas + i)->codigoConsulta, "\n")] = 0;
 
-        char numero[10];
+        char numero[500];
 
         fgets(numero, sizeof(numero), arqConsulta);
         numero[strcspn(numero, "\n")] = 0;
@@ -158,6 +161,9 @@ int lerConsultas(Consulta *arrConsultas, Medico medicos[], Paciente pacientes[])
         fgets(numero, sizeof(numero), arqConsulta);
         numero[strcspn(numero, "\n")] = 0;
         (arrConsultas + i)->ativo = atoi(numero);
+
+        fgets((arrConsultas + i)->feedback, sizeof(char) * 500, arqConsulta);
+        (arrConsultas + i)->feedback[strcspn((arrConsultas + i)->feedback, "\n")] = 0;
 
         fgets(linha, sizeof(char) * 100, arqConsulta); // descartar linha entre dados
 
@@ -209,7 +215,8 @@ void cancelarConsulta(char codigo[], Consulta *consultas, int tamanhoArr)
         fprintf(arqConsulta, "%d\n", (consultas + i)->data.minutos);
         fprintf(arqConsulta, "%s\n", (consultas + i)->paciente.codigo);
         fprintf(arqConsulta, "%s\n", (consultas + i)->medico.codigo);
-        fprintf(arqConsulta, "%d\n\n", (consultas + i)->ativo);
+        fprintf(arqConsulta, "%d\n", (consultas + i)->ativo);
+        fprintf(arqConsulta, "%s\n\n", (consultas + i)->feedback);
     }
     fclose(arqConsulta);
 
@@ -232,13 +239,15 @@ void consultasPorData(Consulta consultas[], int quantidadeConsultas)
     {
         if (consultas[i].data.dia == dia &&
             consultas[i].data.mes == mes &&
-            consultas[i].data.ano == ano)
+            consultas[i].data.ano == ano &&
+            consultas[i].ativo)
         {
             numConsultas++;
             printf("Codigo da consulta: %s\n", consultas[i].codigoConsulta);
             printf("Nome do médico: %s\n", consultas[i].medico.nome);
             printf("Nome do paciente: %s\n", consultas[i].paciente.nome);
-            printf("Horario: %d:%d\n\n", consultas[i].data.hora, consultas[i].data.minutos);
+            printf("Horario: %d:%d\n", consultas[i].data.hora, consultas[i].data.minutos);
+            printf("Feedback: %s\n\n", consultas[i].feedback);
         }
     }
 
@@ -262,13 +271,15 @@ void consultasPorPaciente(Consulta consultas[], int quantidadeConsultas)
     for (int i = 0; i < quantidadeConsultas; i++)
     {
 
-        if (!(strcmp(entrada, consultas[i].paciente.codigo)) || !(strcmp(entrada, consultas[i].paciente.nome)))
+        if ((!(strcmp(entrada, consultas[i].paciente.codigo)) && consultas[i].ativo) ||
+            (!(strcmp(entrada, consultas[i].paciente.nome)) && consultas[i].ativo))
         {
             numConsultas++;
             printf("Codigo da consulta: %s\n", consultas[i].codigoConsulta);
             printf("Nome do médico: %s\n", consultas[i].medico.nome);
             printf("Nome do paciente: %s\n", consultas[i].paciente.nome);
             printf("Horario: %d:%d\n", consultas[i].data.hora, consultas[i].data.minutos);
+            printf("Feedback: %s\n\n", consultas[i].feedback);
         }
     }
 
@@ -293,12 +304,14 @@ void consultasPorMedico(char identificador[], Consulta consultas[], int quantida
             printf("=-=-=-=DADOS DA CONSULTA=-=-=-=\n");
             printf("CODIGO DA CONSULTA: %s\n", consultas[i].codigoConsulta);
             printf("DATA: %d/%d/%d\n", consultas[i].data.dia, consultas[i].data.mes, consultas[i].data.ano);
+            printf("FEEDBACK: %s\n", consultas[i].feedback);
             printf("\n=-=-=-=DADOS DO PACIENTE=-=-=-=\n");
             printf("NOME: %s\n", consultas[i].paciente.nome);
             printf("CODIGO: %s\n", consultas[i].paciente.codigo);
             printf("\n=-=-=-=DADOS DO MEDICO=-=-=-=\n");
             printf("NOME: %s\n", consultas[i].medico.nome);
             printf("CODIGO: %s\n", consultas[i].medico.codigo);
+
             achouConsulta = 1;
             numConsultas++;
         }
@@ -310,4 +323,57 @@ void consultasPorMedico(char identificador[], Consulta consultas[], int quantida
     }
 
     printf("\n=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=\n");
+}
+
+Consulta *procuraConsulta(char codigo[], Consulta *arrConsulta, int tamanhoArr)
+{
+
+    Consulta *resposta = {0};
+    for (int i = 0; i < tamanhoArr; i++)
+    {
+        if (strcmp(codigo, (arrConsulta + i)->codigoConsulta) == 0)
+        {
+            resposta = (arrConsulta + i);
+        }
+    }
+    return resposta;
+}
+
+void adicionarFeedback(Consulta *consultas, int numConsultas)
+{
+    printf("===========%d============", numConsultas);
+    char codConsulta[50];
+    printf("Codigo da consulta: ");
+    scanf("%s", codConsulta);
+
+    Consulta *consultaPmudar = procuraConsulta(codConsulta, consultas, numConsultas);
+    if (consultaPmudar != NULL)
+    {
+        printf("Feedback: ");
+        getchar();
+        fgets(consultaPmudar->feedback, sizeof(char) * 100, stdin);
+
+        FILE *arqConsulta = fopen("consultas.txt", "w");
+        for (int i = 0; i < numConsultas; i++)
+        {
+            fprintf(arqConsulta, "%s\n", (consultas + i)->codigoConsulta);
+            fprintf(arqConsulta, "%d\n", (consultas + i)->data.dia);
+            fprintf(arqConsulta, "%d\n", (consultas + i)->data.mes);
+            fprintf(arqConsulta, "%d\n", (consultas + i)->data.ano);
+            fprintf(arqConsulta, "%d\n", (consultas + i)->data.hora);
+            fprintf(arqConsulta, "%d\n", (consultas + i)->data.minutos);
+            fprintf(arqConsulta, "%s\n", (consultas + i)->paciente.codigo);
+            fprintf(arqConsulta, "%s\n", (consultas + i)->medico.codigo);
+            fprintf(arqConsulta, "%d\n", (consultas + i)->ativo);
+            fprintf(arqConsulta, "%s\n", (consultas + i)->feedback);
+        }
+        fclose(arqConsulta);
+
+        printf("Feedback adicionado com sucesso!\n");
+    }
+    else
+    {
+        printf("Consulta não encontrada!\n");
+    }
+    return;
 }

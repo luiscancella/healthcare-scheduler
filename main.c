@@ -11,10 +11,10 @@ int main()
     char textoResposta[50];
 
     int resposta = -1;
-
     quantidadePacientes = lerPacientes(pacientes);
     quantidadeMedico = lerMedicos(medicos);
     quantidadeConsultas = lerConsultas(consultas, medicos, pacientes);
+    printf("Consultas: %d \nPacientes: %d \nMedicos: %d\n", quantidadeConsultas, quantidadePacientes, quantidadeMedico);
 
     while (resposta != 0)
     {
@@ -47,9 +47,6 @@ int main()
         else if (resposta == 6)
         {
             consultasPorPaciente(consultas, quantidadeConsultas);
-            scanf("%s", textoResposta);
-            cancelarConsulta(textoResposta, consultas, quantidadeConsultas);
-            system("pause");
         }
         else if (resposta == 7)
         {
@@ -58,6 +55,11 @@ int main()
             scanf("%s", textoResposta);
             consultasPorMedico(textoResposta, consultas, quantidadeConsultas);
             system("pause");
+        }
+
+        else if (resposta == 8)
+        {
+            adicionarFeedback(consultas, quantidadeConsultas);
         }
     }
 
