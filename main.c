@@ -14,7 +14,7 @@ int main()
     quantidadePacientes = lerPacientes(pacientes);
     quantidadeMedico = lerMedicos(medicos);
     quantidadeConsultas = lerConsultas(consultas, medicos, pacientes);
-    printf("Consultas: %d \nPacientes: %d \nMedicos: %d\n", quantidadeConsultas, quantidadePacientes, quantidadeMedico);
+    printf("\nConsultas: %d \nPacientes: %d \nMedicos: %d\n\n", quantidadeConsultas, quantidadePacientes, quantidadeMedico);
 
     while (resposta != 0)
     {

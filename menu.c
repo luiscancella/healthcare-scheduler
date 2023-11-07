@@ -13,7 +13,7 @@ int menu()
     while (resposta < 0 || resposta > 8)
     {
         printBarra();
-        printf("BEM VINDO AO MENU!!\n");
+        printf("BEM VINDO AO MENU!!\n\n");
         printf("1 - Cadastrar um paciente\n");
         printf("2 - Cadastrar um medico\n");
         printf("3 - Cadastrar uma consulta\n");

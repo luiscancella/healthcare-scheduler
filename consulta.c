@@ -1,5 +1,6 @@
 #include "medico.c"
 #include "paciente.c"
+#include <stdbool.h>
 
 typedef struct
 {
@@ -37,6 +38,28 @@ int contaConsultasMedicosPorDia(Consulta consultas[], int dia, int mes, int ano,
         }
     }
     return numConsultas;
+}
+
+bool checaHorario(Consulta consultas[], int dia, int mes, int ano, int hora, int minutos, int quantidadeConsultas, Medico medico)
+{
+
+    for (int i = 0; i < quantidadeConsultas; i++)
+    {
+        if (consultas[i].data.dia == dia &&
+            consultas[i].data.mes == mes &&
+            consultas[i].data.ano == ano &&
+            consultas[i].ativo &&
+            !strcmp(consultas[i].medico.codigo, medico.codigo) &&
+            consultas[i].data.hora == hora)
+        {
+
+            if (consultas[i].data.minutos - minutos < 30)
+            {
+                return false;
+            }
+        }
+    }
+    return true;
 }
 
 void criaConsulta(int quantidadeMedico, int quantidadePaciente, Medico medicos[], Paciente pacientes[], int *qtdConsultas, Consulta consultas[])
@@ -91,6 +114,14 @@ void criaConsulta(int quantidadeMedico, int quantidadePaciente, Medico medicos[]
     {
         printf("Medico ja possui duas consultas nesse dia\n");
         return;
+    }
+    else if (contaConsultasMedicosPorDia(consultas, novaConsulta.data.dia, novaConsulta.data.mes, novaConsulta.data.ano, *qtdConsultas, medico) == 1)
+    {
+        if (!checaHorario(consultas, novaConsulta.data.dia, novaConsulta.data.mes, novaConsulta.data.ano, novaConsulta.data.hora, novaConsulta.data.minutos, *qtdConsultas, medico))
+        {
+            printf("\nMedico ja possui uma consulta nesse horario\n");
+            return;
+        }
     }
     else
     {
@@ -341,7 +372,6 @@ Consulta *procuraConsulta(char codigo[], Consulta *arrConsulta, int tamanhoArr)
 
 void adicionarFeedback(Consulta *consultas, int numConsultas)
 {
-    printf("===========%d============", numConsultas);
     char codConsulta[50];
     printf("Codigo da consulta: ");
     scanf("%s", codConsulta);
