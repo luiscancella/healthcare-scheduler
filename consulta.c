@@ -382,6 +382,7 @@ void adicionarFeedback(Consulta *consultas, int numConsultas)
         printf("Feedback: ");
         getchar();
         fgets(consultaPmudar->feedback, sizeof(char) * 100, stdin);
+        consultaPmudar->feedback[strcspn(consultaPmudar->feedback, "\n")] = 0;
 
         FILE *arqConsulta = fopen("consultas.txt", "w");
         for (int i = 0; i < numConsultas; i++)
@@ -395,7 +396,7 @@ void adicionarFeedback(Consulta *consultas, int numConsultas)
             fprintf(arqConsulta, "%s\n", (consultas + i)->paciente.codigo);
             fprintf(arqConsulta, "%s\n", (consultas + i)->medico.codigo);
             fprintf(arqConsulta, "%d\n", (consultas + i)->ativo);
-            fprintf(arqConsulta, "%s\n", (consultas + i)->feedback);
+            fprintf(arqConsulta, "%s\n\n", (consultas + i)->feedback);
         }
         fclose(arqConsulta);
 

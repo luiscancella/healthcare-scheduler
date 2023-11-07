@@ -54,7 +54,6 @@ int main()
             printf("Digite o Nome ou Codigo do Medico ----> ");
             scanf("%s", textoResposta);
             consultasPorMedico(textoResposta, consultas, quantidadeConsultas);
-            system("pause");
         }
 
         else if (resposta == 8)
