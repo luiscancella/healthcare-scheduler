@@ -33,7 +33,7 @@ void criaMedico(int *quantidadeMedico)
     fprintf(arqMedico, "%s\n", novoMedico.especialidade);
 
     fclose(arqMedico);
-    printf("Medico criado com sucesso\n");
+    printf("\nMedico criado com sucesso\n");
 }
 
 int lerMedicos(Medico *arrMedicos)
@@ -45,7 +45,7 @@ int lerMedicos(Medico *arrMedicos)
 
     if (arqMedico == NULL)
     {
-        printf("Erro ao abrir paciente.txt\n");
+        printf("\nErro ao abrir paciente.txt\n");
     }
 
     while (fgets((arrMedicos + i)->nome, sizeof(char) * 100, arqMedico))

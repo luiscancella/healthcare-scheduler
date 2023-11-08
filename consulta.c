@@ -39,21 +39,20 @@ int contaConsultasMedicosPorDia(Consulta consultas[], int dia, int mes, int ano,
     }
     return numConsultas;
 }
-
 bool checaHorario(Consulta consultas[], int dia, int mes, int ano, int hora, int minutos, int quantidadeConsultas, Medico medico)
 {
-
     for (int i = 0; i < quantidadeConsultas; i++)
     {
         if (consultas[i].data.dia == dia &&
             consultas[i].data.mes == mes &&
             consultas[i].data.ano == ano &&
             consultas[i].ativo &&
-            !strcmp(consultas[i].medico.codigo, medico.codigo) &&
-            consultas[i].data.hora == hora)
+            !strcmp(consultas[i].medico.codigo, medico.codigo))
         {
+            int diferencaHoras = consultas[i].data.hora - hora;
+            int diferencaMinutos = consultas[i].data.minutos - minutos;
 
-            if (consultas[i].data.minutos - minutos < 30)
+            if (abs((diferencaHoras)*60 + diferencaMinutos) < 30)
             {
                 return false;
             }
@@ -77,7 +76,7 @@ void criaConsulta(int quantidadeMedico, int quantidadePaciente, Medico medicos[]
 
     if (strcmp(medico.codigo, "") == 0)
     {
-        printf("Medico nao encontrado!\n");
+        printf("\nMedico nao encontrado!\n");
         return;
     }
     novaConsulta.medico = medico;
@@ -88,7 +87,7 @@ void criaConsulta(int quantidadeMedico, int quantidadePaciente, Medico medicos[]
 
     if (strcmp(paciente.codigo, "") == 0)
     {
-        printf("Paciente nao encontrado!\n");
+        printf("\nPaciente nao encontrado!\n");
         return;
     }
     novaConsulta.paciente = paciente;
@@ -97,22 +96,42 @@ void criaConsulta(int quantidadeMedico, int quantidadePaciente, Medico medicos[]
 
     printf("Digite o dia da consulta: ");
     scanf("%d", &novaConsulta.data.dia);
+    if (novaConsulta.data.dia < 1 || novaConsulta.data.dia > 31)
+    {
+        printf("\nDia invalido\n");
+        return;
+    }
 
     printf("Digite o mes da consulta: ");
     scanf("%d", &novaConsulta.data.mes);
+    if (novaConsulta.data.mes < 1 || novaConsulta.data.mes > 12)
+    {
+        printf("\nMes invalido\n");
+        return;
+    }
 
     printf("Digite o ano da consulta: ");
     scanf("%d", &novaConsulta.data.ano);
 
     printf("Digite a hora da consulta: ");
     scanf("%d", &novaConsulta.data.hora);
+    if (novaConsulta.data.hora < 0 || novaConsulta.data.hora > 23)
+    {
+        printf("\nHora invalida\n");
+        return;
+    }
 
     printf("Digite o minuto da consulta: ");
     scanf("%d", &novaConsulta.data.minutos);
+    if (novaConsulta.data.minutos < 0 || novaConsulta.data.minutos > 59)
+    {
+        printf("\nMinuto invalido\n");
+        return;
+    }
 
     if (contaConsultasMedicosPorDia(consultas, novaConsulta.data.dia, novaConsulta.data.mes, novaConsulta.data.ano, *qtdConsultas, medico) >= 2)
     {
-        printf("Medico ja possui duas consultas nesse dia\n");
+        printf("\nMedico ja possui duas consultas nesse dia\n");
         return;
     }
     else if (contaConsultasMedicosPorDia(consultas, novaConsulta.data.dia, novaConsulta.data.mes, novaConsulta.data.ano, *qtdConsultas, medico) == 1)
@@ -123,22 +142,20 @@ void criaConsulta(int quantidadeMedico, int quantidadePaciente, Medico medicos[]
             return;
         }
     }
-    else
-    {
-        fprintf(arqConsultas, "%s\n", novaConsulta.codigoConsulta);
-        fprintf(arqConsultas, "%d\n", novaConsulta.data.dia);
-        fprintf(arqConsultas, "%d\n", novaConsulta.data.mes);
-        fprintf(arqConsultas, "%d\n", novaConsulta.data.ano);
-        fprintf(arqConsultas, "%d\n", novaConsulta.data.hora);
-        fprintf(arqConsultas, "%d\n", novaConsulta.data.minutos);
-        fprintf(arqConsultas, "%s\n", novaConsulta.paciente.codigo);
-        fprintf(arqConsultas, "%s\n", novaConsulta.medico.codigo);
-        fprintf(arqConsultas, "1\n");
-        fprintf(arqConsultas, "Sem Feedback\n\n");
-    }
+
+    fprintf(arqConsultas, "%s\n", novaConsulta.codigoConsulta);
+    fprintf(arqConsultas, "%d\n", novaConsulta.data.dia);
+    fprintf(arqConsultas, "%d\n", novaConsulta.data.mes);
+    fprintf(arqConsultas, "%d\n", novaConsulta.data.ano);
+    fprintf(arqConsultas, "%d\n", novaConsulta.data.hora);
+    fprintf(arqConsultas, "%d\n", novaConsulta.data.minutos);
+    fprintf(arqConsultas, "%s\n", novaConsulta.paciente.codigo);
+    fprintf(arqConsultas, "%s\n", novaConsulta.medico.codigo);
+    fprintf(arqConsultas, "1\n");
+    fprintf(arqConsultas, "Sem Feedback\n\n");
 
     fclose(arqConsultas);
-    printf("Consulta criado com sucesso\n");
+    printf("\nConsulta criado com sucesso\n");
 }
 
 int lerConsultas(Consulta *arrConsultas, Medico medicos[], Paciente pacientes[])
@@ -229,7 +246,7 @@ void cancelarConsulta(char codigo[], Consulta *consultas, int tamanhoArr)
 
     if (existeConsulta != 1)
     {
-        printf("Consulta não existe!\n");
+        printf("\nConsulta não existe!\n");
         return;
     }
 
@@ -251,7 +268,7 @@ void cancelarConsulta(char codigo[], Consulta *consultas, int tamanhoArr)
     }
     fclose(arqConsulta);
 
-    printf("Consulta cancelada com sucesso!\n");
+    printf("\nConsulta cancelada com sucesso!\n");
 }
 
 void consultasPorData(Consulta consultas[], int quantidadeConsultas)
@@ -265,7 +282,7 @@ void consultasPorData(Consulta consultas[], int quantidadeConsultas)
     scanf("%d", &mes);
     printf("Digite o ano: ");
     scanf("%d", &ano);
-
+    printf("\n");
     for (int i = 0; i < quantidadeConsultas; i++)
     {
         if (consultas[i].data.dia == dia &&
@@ -298,6 +315,7 @@ void consultasPorPaciente(Consulta consultas[], int quantidadeConsultas)
     printf("Digite nome ou codigo do paciente: %s", entrada);
     fgets(entrada, sizeof(entrada), stdin);
     entrada[strcspn(entrada, "\n")] = 0;
+    printf("\n");
 
     for (int i = 0; i < quantidadeConsultas; i++)
     {
@@ -316,7 +334,7 @@ void consultasPorPaciente(Consulta consultas[], int quantidadeConsultas)
 
     if (!numConsultas)
     {
-        printf("Nenhuma consulta com esse nome ou codigo de paciente foi encontrada\n");
+        printf("\nNenhuma consulta com esse nome ou codigo de paciente foi encontrada\n");
     }
     return;
 }
@@ -400,11 +418,11 @@ void adicionarFeedback(Consulta *consultas, int numConsultas)
         }
         fclose(arqConsulta);
 
-        printf("Feedback adicionado com sucesso!\n");
+        printf("\nFeedback adicionado com sucesso!\n");
     }
     else
     {
-        printf("Consulta não encontrada!\n");
+        printf("\nConsulta não encontrada!\n");
     }
     return;
 }
