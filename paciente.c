@@ -47,6 +47,10 @@ void criaPaciente(int *quantidadePacientes)
 
     printf("\nDigite o numero do endereco do paciente: ");
     scanf("%d", &novoPaciente.endereco.numero);
+    if (novoPaciente.endereco.numero < 0)
+    {
+        printf("Numero invalido");
+    }
     getchar(); // Para consumir o '\n' deixado pelo scanf
 
     while (resposta != 1 && resposta != 0)
